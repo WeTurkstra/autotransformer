@@ -1,0 +1,28 @@
+{
+    "name": "tibisoft/autotransformer",
+    "description": "A little tool for transforming DTO's to entities and viseversa",
+    "type": "library",
+    "require-dev": {
+        "pestphp/pest": "^2.34",
+        "phpstan/phpstan": "^1.10"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Tibisoft\\AutoTransformer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Willem Turkstra"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "require": {
+        "beberlei/assert": "^3.3"
+    }
+}
