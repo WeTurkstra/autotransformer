@@ -27,6 +27,6 @@
     },
     "scripts": {
         "test": "vendor/bin/pest",
-        "analyze": "vendor/bin/phpstan analyse src --level=9"
+        "analyse": "vendor/bin/phpstan analyse src --level=9"
     }
 }
