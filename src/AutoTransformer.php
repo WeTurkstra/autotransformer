@@ -28,7 +28,12 @@ class AutoTransformer implements AutoTransformerInterface
             $attributes = $property->getAttributes(Count::class);
             if (count($attributes) > 0) {
                 $propertyFrom = $reflectionFrom->getProperty($property->getName());
-                $property->setValue($to, count($propertyFrom->getValue($from)));
+                $value = $propertyFrom->getValue($from);
+                if(is_countable($value)) {
+                    $property->setValue($to, count($value));
+                } else {
+                    $property->setValue($to, 0);
+                }
                 continue;
             }
 

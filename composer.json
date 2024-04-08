@@ -24,5 +24,9 @@
     },
     "require": {
         "beberlei/assert": "^3.3"
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "analyze": "vendor/bin/phpstan analyse src --level=9"
     }
 }
