@@ -6,7 +6,7 @@ use Assert\Assert;
 use Assert\Assertion;
 
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
-class Synonyms
+class Synonyms extends BaseAttribute
 {
     /**
      * @param array<int, string> $synonyms

@@ -2,6 +2,8 @@
 
 namespace Tibisoft\AutoTransformer;
 
+use Tibisoft\AutoTransformer\Attribute\AttributeHandlerInterface;
+use Tibisoft\AutoTransformer\Attribute\BaseAttribute;
 use Tibisoft\AutoTransformer\Attribute\Count;
 use Tibisoft\AutoTransformer\Attribute\Synonyms;
 use Tibisoft\AutoTransformer\Exception\TransformException;
@@ -16,25 +18,23 @@ class AutoTransformer implements AutoTransformerInterface
 
         foreach ($reflectionTo->getProperties() as $property) {
             //look for attribute
-            $attributes = $property->getAttributes(Synonyms::class);
-            if (count($attributes) > 0) {
-               //find the first match!
-                foreach ($attributes[0]->getArguments()[0] as $synonym) {
-                    $this->setPropertyValue($reflectionFrom, $property, $to, $from, $synonym);
+            $attributes = $property->getAttributes();
+
+            var_dump($attributes);
+
+            /** @var \ReflectionAttribute $attribute */
+            foreach($attributes as $attribute) {
+                $attribute = $attribute->newInstance();
+                if(!($attribute instanceof BaseAttribute)) {
+                    continue;
+                }
+                if (class_exists($attribute->isHandledBy())) {
+                    /** @var AttributeHandlerInterface $handler */
+                    $handler = $attribute->isHandledBy();
+                    $handler = new $handler();
+                    $handler->handle($attribute, $reflectionFrom, $property, $to, $from);
                     continue 2;
                 }
-            }
-
-            $attributes = $property->getAttributes(Count::class);
-            if (count($attributes) > 0) {
-                $propertyFrom = $reflectionFrom->getProperty($property->getName());
-                $value = $propertyFrom->getValue($from);
-                if(is_countable($value)) {
-                    $property->setValue($to, count($value));
-                } else {
-                    $property->setValue($to, 0);
-                }
-                continue;
             }
 
             //do default
@@ -49,6 +49,7 @@ class AutoTransformer implements AutoTransformerInterface
      * @param \ReflectionProperty $property
      * @param object $to
      * @param object $from
+     * @param string $propertyName
      *
      * @return void
      */
