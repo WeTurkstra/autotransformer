@@ -30,7 +30,6 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Install dependencies
-      uses: php-actions/composer@v6
       with:
         php_version: "8.2"
       run: composer install --prefer-dist --no-progress
