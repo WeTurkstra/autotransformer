@@ -13,14 +13,17 @@ Without any extra configuration the transformer will loop over the properties of
 
 ```php
 class User {
-    public function __construct(private string $email, private string $plainPassword, private int $age) {
-
+    public function __construct(
+        private string $email,
+        private string $plainPassword,
+        private int $age) {
     }
 }
 
 class UserDTO {
-    public function __construct(private string $email, private int $age) {
-
+    public function __construct(
+        private string $email,
+        private int $age) {
     }
 }
 
@@ -46,14 +49,18 @@ If the default transforming process is not enough you can add attributes to the 
 
 ```php
 class User {
-    public function __construct(private string $email, private string $plainPassword, private int $age) {
-
+    public function __construct(
+        private string $email,
+        private string $plainPassword,
+        private int $age) {
     }
 }
 
 class UserDTO {
-    public function __construct(private string $email, #[\Tibisoft\AutoTransformer\Attribute\Synonyms(['age'])] private int $yearsLive) {
-
+    public function __construct(
+        private string $email, 
+        #[\Tibisoft\AutoTransformer\Attribute\Synonyms(['age'])] 
+        private int $yearsLive) {
     }
 }
 
@@ -74,14 +81,17 @@ object(UserDTO)#8 (2) {
 #### Count
 ```php
 class User {
-    public function __construct(private string $email, private array $comments) {
-
+    public function __construct(
+        private string $email, 
+        private array $comments) {
     }
 }
 
 class UserDTO {
-    public function __construct(private string $email, #[\Tibisoft\AutoTransformer\Attribute\Count] private int $comments) {
-
+    public function __construct(
+        private string $email,
+        #[\Tibisoft\AutoTransformer\Attribute\Count]
+        private int $comments) {
     }
 }
 
