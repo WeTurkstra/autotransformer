@@ -33,6 +33,7 @@ class SomeClassDTO
         public int    $someInt,
         public float  $someFloat,
         public bool   $someBool,
+        public string $extraField,
     )
     {
 

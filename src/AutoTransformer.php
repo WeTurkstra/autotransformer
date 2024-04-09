@@ -10,20 +10,22 @@ use Tibisoft\AutoTransformer\Exception\TransformException;
 
 class AutoTransformer implements AutoTransformerInterface
 {
-    public function transform(object $from, string $to): object
+    public function transform(object $from, string|object $to): object
     {
         $reflectionFrom = new \ReflectionClass($from);
         $reflectionTo = new \ReflectionClass($to);
-        $to = $reflectionTo->newInstanceWithoutConstructor();
+        if (!is_object($to)) {
+            $to = $reflectionTo->newInstanceWithoutConstructor();
+        }
 
         foreach ($reflectionTo->getProperties() as $property) {
             //look for attribute
             $attributes = $property->getAttributes();
 
             /** @var \ReflectionAttribute $attribute */
-            foreach($attributes as $attribute) {
+            foreach ($attributes as $attribute) {
                 $attribute = $attribute->newInstance();
-                if(!($attribute instanceof BaseAttribute)) {
+                if (!($attribute instanceof BaseAttribute)) {
                     continue;
                 }
                 if (class_exists($attribute->isHandledBy())) {

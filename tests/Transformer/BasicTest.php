@@ -21,3 +21,18 @@ test('Expect an exception on type mismatch', function (SomeNullableClass $someCl
     /** @var SomeClassDTO $dto */
     $dto = $transformer->transform($someClass, SomeClassDTO::class);
 })->with([$someNullableClass])->throws(\Tibisoft\AutoTransformer\Exception\TransformException::class);
+
+test('Transform to existing object', function ($someClass) {
+    $transformer = new \Tibisoft\AutoTransformer\AutoTransformer();
+
+    $dto = new SomeClassDTO('AAA', 1, 1.5, true, 'EXTRA');
+
+    /** @var SomeClassDTO $dto */
+    $dto = $transformer->transform($someClass, $dto);
+
+    expect($dto->someString)->toBe("Test");
+    expect($dto->someInt)->toBe(1);
+    expect($dto->someFloat)->toBe(1.2);
+    expect($dto->someBool)->toBe(true);
+    expect($dto->extraField)->toBe('EXTRA');
+})->with([$someClass]);
