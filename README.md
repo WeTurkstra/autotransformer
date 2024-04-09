@@ -16,14 +16,18 @@ class User {
     public function __construct(
         private string $email,
         private string $plainPassword,
-        private int $age) {
+        private int $age,
+    ) {
+    
     }
 }
 
 class UserDTO {
     public function __construct(
         private string $email,
-        private int $age) {
+        private int $age,
+    ) {
+    
     }
 }
 
@@ -52,7 +56,9 @@ class User {
     public function __construct(
         private string $email,
         private string $plainPassword,
-        private int $age) {
+        private int $age,
+    ) {
+    
     }
 }
 
@@ -60,7 +66,9 @@ class UserDTO {
     public function __construct(
         private string $email, 
         #[\Tibisoft\AutoTransformer\Attribute\Synonyms(['age'])] 
-        private int $yearsLive) {
+        private int $yearsLive,
+    ) {
+    
     }
 }
 
@@ -83,7 +91,9 @@ object(UserDTO)#8 (2) {
 class User {
     public function __construct(
         private string $email, 
-        private array $comments) {
+        private array $comments,
+    ) {
+    
     }
 }
 
@@ -91,7 +101,9 @@ class UserDTO {
     public function __construct(
         private string $email,
         #[\Tibisoft\AutoTransformer\Attribute\Count]
-        private int $comments) {
+        private int $comments,
+    ) {
+    
     }
 }
 
@@ -108,5 +120,36 @@ object(UserDTO)#8 (2) {
   int(4)
 }
 ```
+#### InArray
+```php
+class InArrayClass
+{
+    public function __construct(
+        public array $roles = [],
+    ) {
 
+    }
+}
+
+class InArrayDTO
+{
+    public function __construct(
+        #[\Tibisoft\AutoTransformer\Attribute\InArray(property: 'roles', value: 'ROLE_TEAMLEADER')]
+        public bool $isTeamleader,
+    ) {
+
+    }
+}
+
+$object = new InArrayClass(['ROLE_USER', 'ROLE_TEAMLEADER']);
+
+$transformer = new \Tibisoft\AutoTransformer\AutoTransformer();
+$inArrayDTO = $transformer->transform($object, InArrayDTO::class);
+
+//output:
+object(InArrayDTO)#8 (1) {
+  ["isTeamleader"]=>
+  bool(true)
+}
+```
 

@@ -20,8 +20,6 @@ class AutoTransformer implements AutoTransformerInterface
             //look for attribute
             $attributes = $property->getAttributes();
 
-            var_dump($attributes);
-
             /** @var \ReflectionAttribute $attribute */
             foreach($attributes as $attribute) {
                 $attribute = $attribute->newInstance();
