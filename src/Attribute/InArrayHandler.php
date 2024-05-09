@@ -4,7 +4,7 @@ namespace Tibisoft\AutoTransformer\Attribute;
 
 use Tibisoft\AutoTransformer\Exception\TransformException;
 
-#[\Attribute(\Attribute::TARGET_PROPERTY)]
+
 class InArrayHandler implements AttributeHandlerInterface
 {
     public function handle(BaseAttribute $attribute, \ReflectionClass $reflectionFrom, \ReflectionProperty $property, object $to, object $from): void

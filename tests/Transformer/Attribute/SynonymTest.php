@@ -19,7 +19,6 @@ test('Test synonym Attribute', function ($object, $expected) {
     [$object2, 'Diego'],
     [$object3, 'Bianca'],
     [$object4, 'Mariska'],
-
 ]);
 
 class SynonymsClass
