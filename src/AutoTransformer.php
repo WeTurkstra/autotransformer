@@ -57,40 +57,14 @@ class AutoTransformer implements AutoTransformerInterface
         $propertyName = ($propertyName === '') ? $property->getName() : $propertyName;
 
         try {
-            if (!$this->hasProperty($reflectionFrom, $propertyName)) {
+            if (!ReflectionHelper::hasProperty($reflectionFrom, $propertyName)) {
                 return;
             }
 
-            $propertyFrom = $this->getProperty($reflectionFrom, $propertyName);
+            $propertyFrom = ReflectionHelper::getProperty($reflectionFrom, $propertyName);
             $property->setValue($to, $propertyFrom->getValue($from));
         } catch (\ReflectionException|\TypeError $typeError) {
             throw new TransformException($typeError->getMessage());
         }
-    }
-
-    private function getProperty(\ReflectionClass $reflectionClass, string $propertyName): \ReflectionProperty
-    {
-        try {
-            return $reflectionClass->getProperty($propertyName);
-        } catch (\ReflectionException|\TypeError $typeError) {
-            if ($reflectionClass->getParentClass() !== false) {
-                return $reflectionClass->getParentClass()->getProperty($propertyName);
-            }
-
-            throw $typeError;
-        }
-    }
-
-    private function hasProperty(\ReflectionClass $reflectionClass, string $propertyName): bool
-    {
-        if ($reflectionClass->hasProperty($propertyName)) {
-            return true;
-        }
-
-        if ($reflectionClass->getParentClass() !== false) {
-            return $reflectionClass->getParentClass()->hasProperty($propertyName);
-        }
-
-        return false;
     }
 }

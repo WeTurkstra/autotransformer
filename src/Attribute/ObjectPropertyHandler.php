@@ -3,6 +3,7 @@
 namespace Tibisoft\AutoTransformer\Attribute;
 
 use Tibisoft\AutoTransformer\Exception\TransformException;
+use Tibisoft\AutoTransformer\ReflectionHelper;
 
 
 class ObjectPropertyHandler implements AttributeHandlerInterface
@@ -26,11 +27,11 @@ class ObjectPropertyHandler implements AttributeHandlerInterface
 
         $reflectionObject = new \ReflectionClass($object);
 
-        if (!$reflectionObject->hasProperty($attribute->property)) {
+        if (!ReflectionHelper::hasProperty($reflectionObject, $attribute->property)) {
             return;
         }
 
-        $objectProperty = $reflectionObject->getProperty($attribute->property);
+        $objectProperty = ReflectionHelper::getProperty($reflectionObject, $attribute->property);
 
         $property->setValue($to, $objectProperty->getValue($object));
     }
