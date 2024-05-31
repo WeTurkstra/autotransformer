@@ -4,6 +4,7 @@ namespace Tibisoft\AutoTransformer;
 
 use Tibisoft\AutoTransformer\Attribute\AttributeHandlerInterface;
 use Tibisoft\AutoTransformer\Attribute\BaseAttribute;
+use Tibisoft\AutoTransformer\Attribute\Ignore;
 use Tibisoft\AutoTransformer\Exception\TransformException;
 
 class AutoTransformer implements AutoTransformerInterface
@@ -23,6 +24,10 @@ class AutoTransformer implements AutoTransformerInterface
 
             foreach ($attributes as $attribute) {
                 $attribute = $attribute->newInstance();
+                if($attribute instanceof Ignore) {
+                    continue 2;
+                }
+
                 if (!($attribute instanceof BaseAttribute)) {
                     continue;
                 }
